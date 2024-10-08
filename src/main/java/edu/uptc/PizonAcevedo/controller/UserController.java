@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class UserController {
 
 //    @Value("${message}")
@@ -67,8 +69,8 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity getUsers(){
         return new ResponseEntity<>(userMgmt.getUsers(), HttpStatus.OK);
     }
