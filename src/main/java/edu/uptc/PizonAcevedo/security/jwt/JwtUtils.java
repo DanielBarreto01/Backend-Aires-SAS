@@ -1,21 +1,31 @@
 package edu.uptc.PizonAcevedo.security.jwt;
 
+import edu.uptc.PizonAcevedo.domain.model.Roles;
+import edu.uptc.PizonAcevedo.domain.model.UserEntity;
+import edu.uptc.PizonAcevedo.domain.repository.CredentialRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
 public class JwtUtils {
+
+    @Autowired
+    CredentialRepository credentialRepository;
+
 
     @Value("${jwt.secret.key}")
     private String secretKey;
@@ -24,8 +34,19 @@ public class JwtUtils {
     private String timeExpiration;
 
     public String generateAccesToken (String username){
+        UserEntity userEntity = credentialRepository.findByUserName(username).get().getUser();
+
+
         return Jwts.builder()
                 .subject(username)
+                .claim("id", userEntity.getId())
+                .claim("name", userEntity.getName())
+                .claim("lastName", userEntity.getLastName())
+                .claim("typeIdentification", userEntity.getTypeIdentification())
+                .claim("numberIdentification", userEntity.getNumberIdentification())
+                .claim("email", userEntity.getEmail())
+                .claim("phoneNumber", userEntity.getPhoneNumber())
+                .claim("roles", userEntity.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList()))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + Long.parseLong(timeExpiration)))
                 .signWith(getSignatureKey(), SignatureAlgorithm.HS256)
