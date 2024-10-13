@@ -1,5 +1,6 @@
 package edu.uptc.PizonAcevedo.security.filtersJwt;
 
+import edu.uptc.PizonAcevedo.domain.repository.BlacklistedTokenRepository;
 import edu.uptc.PizonAcevedo.security.jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,12 +25,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private BlacklistedTokenRepository blacklistedTokenRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String tokenHeader = request.getHeader("Authorization");
         if(tokenHeader != null && tokenHeader.startsWith("Bearer ")){
             String token = tokenHeader.substring(7);
-            if (jwtUtils.isValidateToken(token)){
+            if (jwtUtils.isValidateToken(token) && !blacklistedTokenRepository.existsByToken(token) ){
                 String username = jwtUtils.getUserNameFromToken(token);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());

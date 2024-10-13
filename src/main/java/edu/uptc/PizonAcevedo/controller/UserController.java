@@ -3,8 +3,10 @@ package edu.uptc.PizonAcevedo.controller;
 import edu.uptc.PizonAcevedo.domain.model.ERole;
 import edu.uptc.PizonAcevedo.domain.model.Roles;
 import edu.uptc.PizonAcevedo.domain.model.UserEntity;
+import edu.uptc.PizonAcevedo.service.TokenBlacklistService;
 import edu.uptc.PizonAcevedo.service.UserMgmt;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserMgmt userMgmt;
+
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
 
 //    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
 //    public String welcome(){
@@ -65,6 +70,15 @@ public class UserController {
                 return new ResponseEntity<>("Este numero de identificacion ya está registrado.", HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>("Error al registar usuario.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/json")
+    public void logout(HttpServletRequest request) {
+        String tokenHeader = request.getHeader("Authorization");
+        if(tokenHeader != null && tokenHeader.startsWith("Bearer ")){
+            String token = tokenHeader.substring(7);
+            tokenBlacklistService.addToBlacklist(token);
         }
     }
 
