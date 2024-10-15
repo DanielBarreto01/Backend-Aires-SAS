@@ -31,6 +31,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Credential credential = null;
         String userName = "";
         String password = "";
+
         try {
             credential = new ObjectMapper().readValue(request.getInputStream(), Credential.class);
             userName = credential.getUserName();

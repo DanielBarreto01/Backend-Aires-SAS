@@ -33,10 +33,6 @@ public class UserEntity {
     @Getter @Setter
     private String numberIdentification;
 
-    @Column(length = 2)
-    @Getter @Setter
-    private String role;
-
     @Column(unique = true, length = 70)
     @Getter @Setter
     private String email;

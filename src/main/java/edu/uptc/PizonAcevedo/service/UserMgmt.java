@@ -1,6 +1,8 @@
 package edu.uptc.PizonAcevedo.service;
 
 import edu.uptc.PizonAcevedo.domain.model.Credential;
+import edu.uptc.PizonAcevedo.domain.model.ERole;
+import edu.uptc.PizonAcevedo.domain.model.Roles;
 import edu.uptc.PizonAcevedo.domain.repository.CredentialRepository;
 import edu.uptc.PizonAcevedo.util.Email;
 import edu.uptc.PizonAcevedo.domain.repository.UserRepository;
@@ -36,7 +38,6 @@ public class UserMgmt {
                     .user(user)
                     .password(generateRandomPassword())
                 .build();
-                //new Credential(generateBaseUsername(user), user, generateRandomPassword());
         try {
             emailService.sendEmail(user.getEmail(), Email.emailSubject(), Email.bodyEmail(user.getName(), user.getLastName(), credential.getUserName(), credential.getPassword()));
             credential.setPassword(new BCryptPasswordEncoder().encode(credential.getPassword()));
@@ -65,7 +66,19 @@ public class UserMgmt {
         }
         return password.toString();
     }
-    public void sendEmail(){
 
+    public List<UserEntity> getUsersByRole(String role) {
+        switch (role) {
+            case "Administrador":
+
+                return userRepo.findByRole(ERole.valueOf("ADMIN"));
+            case "Tecnico interno":
+                return userRepo.findByRole(ERole.valueOf("INTERNAL_TECHNICIAN"));
+            case "Tecnico externo":
+                return userRepo.findByRole(ERole.valueOf("EXTERNAL_TECHNICIAN"));
+            default:
+                return null;
+        }
     }
+
 }

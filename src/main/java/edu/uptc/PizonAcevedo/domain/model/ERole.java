@@ -2,6 +2,7 @@ package edu.uptc.PizonAcevedo.domain.model;
 
 public enum ERole {
     ADMIN,
-    USER,
-    TECNICO
+    INTERNAL_TECHNICIAN,
+    EXTERNAL_TECHNICIAN
+
 }

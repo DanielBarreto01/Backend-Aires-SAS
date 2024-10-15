@@ -57,7 +57,6 @@ public class UserController {
                     .lastName((String) requestData.get("lastName"))
                     .typeIdentification((String) requestData.get("typeIdentification"))
                     .numberIdentification((String) requestData.get("numberIdentification"))
-                    .role((String) requestData.get("role"))
                     .email((String) requestData.get("email"))
                     .phoneNumber((Long) requestData.get("phoneNumber"))
                     .roles(setRoles((Collection)requestData.get("roles"))).build());
@@ -87,6 +86,14 @@ public class UserController {
     public ResponseEntity getUsers(){
         return new ResponseEntity<>(userMgmt.getUsers(), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/ShowUserRoles/{role}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity shiftByUserId (@PathVariable String role ){
+        userMgmt.getUsersByRole(role);
+        return new ResponseEntity<>(userMgmt.getUsersByRole(role), HttpStatus.OK);
+    }
+
 
     private Set<Roles> setRoles(Collection<String> roles){
         return roles.stream()
