@@ -59,6 +59,7 @@ public class UserController {
                     .numberIdentification((String) requestData.get("numberIdentification"))
                     .email((String) requestData.get("email"))
                     .phoneNumber((Long) requestData.get("phoneNumber"))
+                    .address((String) requestData.get("address"))
                     .roles(setRoles((Collection)requestData.get("roles"))).build());
             return new ResponseEntity<>("El usuario fue creado correctamente", HttpStatus.OK); // Respuesta de éxito
         } catch (DataIntegrityViolationException e) {
