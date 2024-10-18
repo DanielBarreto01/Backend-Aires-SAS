@@ -56,6 +56,15 @@ public class UserEntity {
     @Getter @Setter
     private String address;
 
+    @NotNull(message = "la estado del usuario es obligatorio")
+    @Getter @Setter
+    private boolean userStatus = true;
+
+
+    @Column(length = 250, nullable = true)
+    @Getter @Setter
+    private String pathImage;
+
 
     @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
@@ -67,14 +76,11 @@ public class UserEntity {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles;
 
-    @Column(nullable = false)
-    @NotNull(message = "la estado del usuario es obligatorio")
-    @Getter @Setter
-    private boolean userStatus = true;
-
-
-    @Column(length = 250, nullable = true)
-    @Getter @Setter
-    private String pathImage;
+    @PrePersist
+    public void prePersist() {
+        if (!this.userStatus) {
+            this.userStatus = true;  // Establecer valor por defecto si no se ha asignado
+        }
+    }
 
 }

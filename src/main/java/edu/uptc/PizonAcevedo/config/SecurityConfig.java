@@ -48,7 +48,6 @@ public class SecurityConfig {
                 .cors((cors) -> cors
                 .configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
-                        auth.requestMatchers("/users/create").permitAll();
                         auth.requestMatchers("/login").permitAll();
                         auth.anyRequest().authenticated();
                 })
@@ -77,7 +76,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST, PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization","Content-Type","Accept"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

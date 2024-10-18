@@ -52,9 +52,10 @@ public class UserMgmt {
     }
 
     public static String generateBaseUsername(UserEntity user) {
-        String baseUsername = user.getName().toLowerCase() + user.getLastName().toLowerCase().substring(0, 3);
+        String baseUsername = (user.getName().toLowerCase().length() > 4? user.getName().toLowerCase().substring(0,4):user.getName().toLowerCase()) +
+                user.getLastName().toLowerCase().substring(0, 3);
         String uniquePart = user.getNumberIdentification().substring(0, 4);
-        return baseUsername + (user.getId()-1);
+        return baseUsername.replaceAll("\\s+", "") + (user.getId()-1);
     }
 
     public String generateRandomPassword() {

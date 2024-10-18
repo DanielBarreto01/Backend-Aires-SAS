@@ -49,6 +49,16 @@ public class UserController {
         return "Hello USER";
     }
 
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
+//    public ResponseEntity createUser(@RequestBody Map<String, Object> requestData) {
+//        if(((String) requestData.get("numberIdentification")).equals("20002")){
+//            return new ResponseEntity<>("El usuario fue creado correctamente", HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>("El usuario no fue creado correctamente", HttpStatus.NOT_FOUND);
+//    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity createUser(@RequestBody Map<String, Object> requestData) {
         try {
@@ -58,7 +68,7 @@ public class UserController {
                     .typeIdentification((String) requestData.get("typeIdentification"))
                     .numberIdentification((String) requestData.get("numberIdentification"))
                     .email((String) requestData.get("email"))
-                    .phoneNumber((Long) requestData.get("phoneNumber"))
+                    .phoneNumber(Long.parseLong((String) requestData.get("phoneNumber")))
                     .address((String) requestData.get("address"))
                     .roles(setRoles((Collection)requestData.get("roles"))).build());
             return new ResponseEntity<>("El usuario fue creado correctamente", HttpStatus.OK); // Respuesta de éxito
@@ -67,9 +77,9 @@ public class UserController {
             if (errorMessage.contains("email")) {
                 return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
             } else if (errorMessage.contains("number_identification")){
-                return new ResponseEntity<>("Este numero de identificacion ya está registrado.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>("Error al registar usuario.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al registrar el usuario, intente de nuevo.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -93,6 +103,33 @@ public class UserController {
     public ResponseEntity shiftByUserId (@PathVariable String role ){
         userMgmt.getUsersByRole(role);
         return new ResponseEntity<>(userMgmt.getUsersByRole(role), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/userUpdate", method = RequestMethod.PATCH, produces = "application/json")
+    public ResponseEntity updateUser(@RequestBody Map<String, Object> requestData) {
+        try {
+            userMgmt.saveUser(UserEntity.builder()
+                    .name((String) requestData.get("name"))
+                    .lastName((String) requestData.get("lastName"))
+                    .typeIdentification((String) requestData.get("typeIdentification"))
+                    .numberIdentification((String) requestData.get("numberIdentification"))
+                    .email((String) requestData.get("email"))
+                    .phoneNumber(Long.parseLong((String) requestData.get("phoneNumber")))
+                    .address((String) requestData.get("address"))
+                    .pathImage((String) requestData.get("pathImage"))
+                    .userStatus((boolean) requestData.get("userStatus"))
+                    .roles(setRoles((Collection)requestData.get("roles"))).build());
+            return new ResponseEntity<>("El usuario fue creado correctamente", HttpStatus.OK); // Respuesta de éxito
+        } catch (DataIntegrityViolationException e) {
+            String errorMessage = e.getRootCause().getMessage();
+            if (errorMessage.contains("email")) {
+                return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
+            } else if (errorMessage.contains("number_identification")){
+                return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>("Error al registrar el usuario, intente de nuevo.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
