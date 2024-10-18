@@ -68,6 +68,10 @@ public class UserMgmt {
         return password.toString();
     }
 
+//    public void updateUser(UserEntity user){
+//        userRepo.(user);
+//    }
+
     public List<UserEntity> getUsersByRole(String role) {
         switch (role) {
             case "Administrador":
