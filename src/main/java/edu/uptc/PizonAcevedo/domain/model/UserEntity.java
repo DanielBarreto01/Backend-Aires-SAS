@@ -56,6 +56,7 @@ public class UserEntity {
     @Getter @Setter
     private String address;
 
+    @Column
     @NotNull(message = "la estado del usuario es obligatorio")
     @Getter @Setter
     private boolean userStatus = true;
@@ -82,5 +83,6 @@ public class UserEntity {
             this.userStatus = true;  // Establecer valor por defecto si no se ha asignado
         }
     }
+
 
 }
