@@ -61,7 +61,7 @@ public class UserEntity {
     private boolean userStatus = true;
 
 
-    @Column(length = 250, nullable = true)
+    @Column(length = 600, nullable = true)
     @Getter @Setter
     private String pathImage;
 

@@ -9,6 +9,7 @@ import edu.uptc.PizonAcevedo.domain.repository.UserRepository;
 import edu.uptc.PizonAcevedo.domain.model.UserEntity;
 import edu.uptc.PizonAcevedo.service.email.IEmailService;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,9 +69,17 @@ public class UserMgmt {
         return password.toString();
     }
 
-//    public void updateUser(UserEntity user){
-//        userRepo.(user);
-//    }
+    @Transactional
+    public void updateUser(int id, UserEntity user){
+        //userRepo.findUserById(id);
+
+        // Llamada al repositorio para actualizar los campos
+        userRepo.updateUser(id, user.getName(), user.getLastName(), user.getTypeIdentification(),
+                user.getNumberIdentification(), user.getEmail(), user.getPhoneNumber(),
+                user.getAddress(), user.getPathImage(), user.isUserStatus());
+
+    }
+
 
     public List<UserEntity> getUsersByRole(String role) {
         switch (role) {

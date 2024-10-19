@@ -106,10 +106,10 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value = "/userUpdate", method = RequestMethod.PATCH, produces = "application/json")
-    public ResponseEntity updateUser(@RequestBody Map<String, Object> requestData) {
+    @RequestMapping(value = "/userUpdate/{id}", method = RequestMethod.PATCH, produces = "application/json")
+    public ResponseEntity updateUser(@PathVariable int id, @RequestBody Map<String, Object> requestData) {
         try {
-            userMgmt.saveUser(UserEntity.builder()
+            userMgmt.updateUser(id, UserEntity.builder()
                     .name((String) requestData.get("name"))
                     .lastName((String) requestData.get("lastName"))
                     .typeIdentification((String) requestData.get("typeIdentification"))
