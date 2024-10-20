@@ -120,7 +120,7 @@ public class UserController {
                     .pathImage((String) requestData.get("pathImage"))
                     .userStatus((boolean) requestData.get("userStatus"))
                     .roles(setRoles((Collection)requestData.get("roles"))).build());
-            return new ResponseEntity<>("El usuario fue creado correctamente", HttpStatus.OK); // Respuesta de éxito
+            return new ResponseEntity<>("El usuario se actualizo exitasamente", HttpStatus.OK); // Respuesta de éxito
         } catch (DataIntegrityViolationException e) {
             String errorMessage = e.getRootCause().getMessage();
             if (errorMessage.contains("email")) {
@@ -128,7 +128,7 @@ public class UserController {
             } else if (errorMessage.contains("number_identification")){
                 return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>("Error al registrar el usuario, intente de nuevo.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al actualizar la informacón del usuario, intente de nuevo.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
