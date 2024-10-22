@@ -58,6 +58,7 @@ public class UserController {
 //        return new ResponseEntity<>("El usuario no fue creado correctamente", HttpStatus.NOT_FOUND);
 //    }
 
+
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity createUser(@RequestBody Map<String, Object> requestData) {
@@ -70,6 +71,7 @@ public class UserController {
                     .email((String) requestData.get("email"))
                     .phoneNumber(Long.parseLong((String) requestData.get("phoneNumber")))
                     .address((String) requestData.get("address"))
+                    .pathImage((String) requestData.get("pathImage"))
                     .roles(setRoles((Collection)requestData.get("roles"))).build());
             return new ResponseEntity<>("El usuario fue creado correctamente", HttpStatus.OK); // Respuesta de éxito
         } catch (DataIntegrityViolationException e) {
