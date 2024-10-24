@@ -1,5 +1,6 @@
 package edu.uptc.PizonAcevedo.service;
 
+import edu.uptc.PizonAcevedo.domain.model.Credential;
 import edu.uptc.PizonAcevedo.domain.model.ERole;
 import edu.uptc.PizonAcevedo.domain.model.Roles;
 import edu.uptc.PizonAcevedo.domain.repository.CredentialRepository;
@@ -41,14 +42,17 @@ public class UserMgmt {
         System.out.println(user.getPathImage());
         System.out.println(user.getId() + "   userid");
         System.out.println();
-        emailService.sendEmail(user.getEmail(), Email.emailSubject(), Email.bodyEmail(user.getName(), user.getLastName(), userName, password));
-
-        // userRepo.save(user);
-//        Credential credential = Credential.builder()
-//                    .userName(generateBaseUsername(user))
-//                    .user(user)
-//                    .password(generateRandomPassword())
-//                .build();
+        if(!userRepo.existsByEmailAndNumberIdentification(user.getEmail(), user.getNumberIdentification())){
+            emailService.sendEmail(user.getEmail(), Email.emailSubject(), Email.bodyEmail(user.getName(), user.getLastName(), userName, password));
+        }
+        password = passwordEncoder.encode(password);
+        userRepo.save(user);
+        Credential credential = Credential.builder()
+                .userName(userName)
+                .user(user)
+                .password(password)
+                .build();
+        credentialRepository.save(credential);
 //        try {
 //            emailService.sendEmail(user.getEmail(), Email.emailSubject(), Email.bodyEmail(user.getName(), user.getLastName(), credential.getUserName(), credential.getPassword()));
 //            credential.setPassword(new BCryptPasswordEncoder().encode(credential.getPassword()));
@@ -70,8 +74,9 @@ public class UserMgmt {
 //    }
 
     public String generateUniqueUsername(UserEntity user) {
-        String baseUsername = (user.getName() + "." + user.getLastName()).toLowerCase();  // Generar base del nombre
-        String username = baseUsername;
+        String baseUsername = (user.getName().contains(" ")? user.getName().split(" ")[0] : user.getName()) + "."
+                + (user.getLastName().contains(" ")? user.getLastName().split(" ")[0] : user.getLastName());  // Generar base del nombre
+        String username = baseUsername.replaceAll("\\s+", "").toLowerCase();
         Random random = new Random();
         int suffix = random.nextInt(9900) + 100;  // Número aleatorio entre 100 y 999
 

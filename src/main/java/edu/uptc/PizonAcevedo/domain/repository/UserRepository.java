@@ -17,6 +17,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     // @Query("{ 'userId' : ?0 }")
     UserEntity findUserByCredential(Credential credential);
     UserEntity findUserById(int id);
+    boolean existsByEmailAndNumberIdentification(String email, String numberIdentification);
 
     @Query(
             value = "SELECT ur.role_id FROM user_roles ur WHERE ur.user_id = :userId",
