@@ -6,6 +6,7 @@ import edu.uptc.PizonAcevedo.domain.model.UserEntity;
 import edu.uptc.PizonAcevedo.service.TokenBlacklistService;
 import edu.uptc.PizonAcevedo.service.UserMgmt;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -52,10 +53,10 @@ public class UserController {
 //    @PreAuthorize("hasRole('ADMIN')")
 //    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
 //    public ResponseEntity createUser(@RequestBody Map<String, Object> requestData) {
-//        if(((String) requestData.get("numberIdentification")).equals("20002")){
-//            return new ResponseEntity<>("El usuario fue creado correctamente", HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>("El usuario no fue creado correctamente", HttpStatus.NOT_FOUND);
+//        System.out.println(requestData);
+//    return new ResponseEntity<>("El usuario fue creado correctamente entra bien", HttpStatus.NOT_FOUND);
+//
+//
 //    }
 
 
@@ -81,8 +82,12 @@ public class UserController {
             } else if (errorMessage.contains("number_identification")){
                 return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>("Error al registrar el usuario, intente de nuevo.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (MessagingException e){
+            return new ResponseEntity<>("Correo no valido", HttpStatus.NOT_FOUND);
+
         }
+        return new ResponseEntity<>("Error al registrar el usuario, intente de nuevo.", HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/json")
