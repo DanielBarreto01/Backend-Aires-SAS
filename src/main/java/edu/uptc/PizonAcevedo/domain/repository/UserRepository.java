@@ -19,6 +19,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findUserById(int id);
     boolean existsByEmailAndNumberIdentification(String email, String numberIdentification);
 
+
     @Query(
             value = "SELECT ur.role_id FROM user_roles ur WHERE ur.user_id = :userId",
             nativeQuery = true
@@ -49,5 +50,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             @Param("address") String address,
             @Param("pathImage") String pathImage,
             @Param("userStatus") boolean userStatus);
+
+    UserEntity findByEmail(String email);
 }
 

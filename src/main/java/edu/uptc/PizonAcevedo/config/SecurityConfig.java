@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
                         auth.requestMatchers("/login").permitAll();
+                        auth.requestMatchers("/users/create").permitAll();
                         auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

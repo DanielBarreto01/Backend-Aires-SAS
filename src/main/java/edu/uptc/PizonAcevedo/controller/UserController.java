@@ -60,7 +60,7 @@ public class UserController {
 //    }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity createUser(@RequestBody Map<String, Object> requestData) {
         try {
@@ -82,9 +82,8 @@ public class UserController {
             } else if (errorMessage.contains("number_identification")){
                 return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
             }
-        }catch (MessagingException e){
-            return new ResponseEntity<>("Correo no valido", HttpStatus.NOT_FOUND);
-
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
         return new ResponseEntity<>("Error al registrar el usuario, intente de nuevo.", HttpStatus.INTERNAL_SERVER_ERROR);
 
