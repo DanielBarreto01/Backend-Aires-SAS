@@ -40,9 +40,10 @@ public class UserController {
 //        return message;
 //    }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/hello-1")
     public String helloAdmin(){
-        return "Hello ADMIN";
+        return "Hello ADMIN hijo de la gran puta";
     }
 
     @GetMapping("/hello-2")
