@@ -42,7 +42,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/hello-1")
     public String helloAdmin(){
-        return "Hello ADMIN hijo de perra";
+        return "Hello perra";
     }
 
     @GetMapping("/hello-2")
