@@ -30,10 +30,25 @@ public class PasswordResets {
     @Getter @Setter
     private Date createDate;
 
+    @NotNull
+    @Getter @Setter
+    private String token;
+
+    @NotNull
+    @Getter @Setter
+    private boolean status =true;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @Getter @Setter
     private UserEntity user;
+
+
+    @PrePersist
+    public void prePersist() {
+        if (!this.status) {
+            this.status = true;  // Establecer valor por defecto si no se ha asignado
+        }
+    }
 
 }
