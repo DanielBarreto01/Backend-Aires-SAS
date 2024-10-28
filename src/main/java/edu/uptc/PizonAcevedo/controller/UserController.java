@@ -138,6 +138,21 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('INTERNAL_TECHNICIAN') or hasRole('EXTERNAL_TECHNICIAN')")
+    @RequestMapping(value = "/findUserById/{id}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity findUserById(@PathVariable int id){
+        try {
+            UserEntity user = userMgmt.findUserById(id);
+            if (user != null) {
+                return new ResponseEntity<>(userMgmt.findUserById(id), HttpStatus.OK);
+            }
+            return new ResponseEntity<>("El usuario no existe", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al buscar un usuario", HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 
     private Set<Roles> setRoles(Collection<String> roles){
         return roles.stream()

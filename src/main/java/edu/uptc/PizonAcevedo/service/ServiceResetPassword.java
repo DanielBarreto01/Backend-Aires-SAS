@@ -12,9 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import edu.uptc.PizonAcevedo.domain.repository.RepositoryResetPassword;
 
-import java.util.Date;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ServiceResetPassword {
@@ -41,7 +39,7 @@ public class ServiceResetPassword {
             repostoryResetPassword.save(PasswordResets.builder()
                             .resetCode(passwordEncoder.encode(String.valueOf(codeResetPassword)))
                             .createDate(new Date(System.currentTimeMillis()))
-                            .expirationDate(new Date(System.currentTimeMillis() +3600000))
+                            .expirationDate(new Date(System.currentTimeMillis() +60000))
                             .token(tokenResetPassword)
                             .user(user).build());
         }else {
@@ -51,24 +49,30 @@ public class ServiceResetPassword {
     }
 
 
-    public Date validateStatusToken(String token) {
+    public Map validateStatusToken(String token) {
         PasswordResets passwordResets = repostoryResetPassword.findByStatusAndToken(true, token);
         System.out.println(passwordResets);
         System.out.println(passwordResets.isStatus());
         System.out.println(passwordResets.getExpirationDate().after(new Date()));
         if(passwordResets.isStatus() && passwordResets.getExpirationDate().after(new Date())){
-            return passwordResets.getExpirationDate();
+            System.out.println(passwordResets.getExpirationDate());
+            return new HashMap() {{
+                put("date", passwordResets.getExpirationDate().getTime());
+                put("token", token);
+            }};
         }
         return null;
     }
 
-    public boolean changePasswordService(String token, String password) {
+    public boolean changePasswordService(String token, String password, String verificationCode) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         PasswordResets passwordResets = repostoryResetPassword.findByStatusAndToken(true, token);
-        if (passwordResets.isStatus()) {
+        System.out.println(passwordEncoder.matches(verificationCode, passwordResets.getResetCode()) + "   copara codigos");
+        if (passwordResets.isStatus() && passwordEncoder.matches(verificationCode, passwordResets.getResetCode())) {
             repostoryResetPassword.deactivateResetStatus(token);
             credentialRepository.updatePasswordByUserId(password, passwordResets.getUser().getId());
             return true;
         }
-        return true;
+        return false;
     }
 }

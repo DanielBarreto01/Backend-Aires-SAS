@@ -2,7 +2,6 @@ package edu.uptc.PizonAcevedo.domain.repository;
 
 import edu.uptc.PizonAcevedo.domain.model.Credential;
 import edu.uptc.PizonAcevedo.domain.model.ERole;
-import edu.uptc.PizonAcevedo.domain.model.Roles;
 import edu.uptc.PizonAcevedo.domain.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
@@ -52,5 +51,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             @Param("userStatus") boolean userStatus);
 
     UserEntity findByEmail(String email);
+    Optional<UserEntity> findById(Integer id);
 }
 

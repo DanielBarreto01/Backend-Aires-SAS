@@ -62,6 +62,10 @@ public class UserMgmt {
 //        }
     }
 
+    public UserEntity findUserById(int id){
+            return userRepo.findUserById(id);
+    }
+
     public List<UserEntity> getUsers(){
         return userRepo.findAll();
     }

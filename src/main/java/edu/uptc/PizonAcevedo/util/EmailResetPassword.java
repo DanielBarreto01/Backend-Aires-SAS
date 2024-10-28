@@ -58,16 +58,16 @@ public class EmailResetPassword {
                 "    <div class=\"container\">\n" +
                 "        <h1>Código de Verificación para Recuperar tu Contraseña</h1>\n" +
                 "        <p>Estimado/a <span class=\"highlight\">" + name + " " + lastName + "</span>,</p>\n" +
+                "        <p>Nombre de usuario: <span class=\"highlight\">" + userName + "</span></p>\n" +
                 "        <p>Hemos recibido una solicitud para restablecer tu contraseña.</p>\n" +
                 "        <p>Para completar el proceso de recuperación, utiliza el siguiente código de verificación:</p>\n" +
                 "        <p style=\"text-align: center; font-size: 24px; font-weight: bold; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 8px;\">" + code + "</p>\n" +
                 "        <p>Este código debe ser ingresado exclusivamente en el siguiente enlace:</p>\n" +
                 "        <p style=\"text-align: center;\"><a href=\"" + "http://localhost:3000/resetpassword?token=" + token + "\" class=\"btn\">Ingresar Código de Verificación</a></p>\n" +
-                "        <p>Recuerda que este código es válido solo por un tiempo limitado y deberá ser introducido en la página de recuperación de contraseña para completar el proceso.</p>\n" +
-                "        <p>Recuerda que tu nombre de usuario para iniciar sesión es: <span class=\"highlight\">" + userName + "</span>.</p>\n" + // Agregado aquí
+                "        <p>Recuerda que este código es válido solo por una hora y podrás usarlo una única vez en la página de recuperación de contraseña para completar el proceso.</p>\n" +
                 "        <p>Si no solicitaste un cambio de contraseña, puedes ignorar este mensaje. Tu cuenta permanecerá segura.</p>\n" +
                 "        <p>Para cualquier consulta adicional, no dudes en ponerte en contacto con nosotros.</p>\n" +
-                "        <p>Atentamente,<br><strong>" + "companyName" + "</strong><br>" + "contactInfo" + "</p>\n" +
+                "        <p>Atentamente,<br><strong>" + "P&A Aires Acondicionados" + "</strong><br>" + "contactInfo" + "</p>\n" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";

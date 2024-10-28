@@ -34,11 +34,10 @@ public class ResetPasswordController {
     @RequestMapping(value = "/validateStatusToken/{token}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity validateStatusToken(@PathVariable String token) {
         try {
-            Date date = serviceResetPassword.validateStatusToken(token);
-            if(date != null){
-                return ResponseEntity.ok(new HashMap<>() {{
-                    put("date", date.getTime());
-                }});
+            Map response = serviceResetPassword.validateStatusToken(token);
+            System.out.println(response);
+            if(response != null){
+                return ResponseEntity.ok(response);
             }
             return ResponseEntity.badRequest().
                     build();
@@ -52,11 +51,11 @@ public class ResetPasswordController {
     public  ResponseEntity changePassword(@PathVariable String token, @RequestBody Map<String, String> requestData) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
-            if(serviceResetPassword.changePasswordService(token, passwordEncoder.encode(requestData.get("password")))){
+            if(serviceResetPassword.changePasswordService(token, passwordEncoder.encode(requestData.get("password")), requestData.get("verificationCode"))){
                 return new ResponseEntity<>("Se cambio la contraseña correctamente", HttpStatus.OK);
             }
-            return ResponseEntity.badRequest().
-                    build();
+            return new ResponseEntity<>("Código de verificación erroneo", HttpStatus.NOT_FOUND);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.notFound().build();
