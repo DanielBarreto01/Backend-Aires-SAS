@@ -42,7 +42,6 @@ public class ResetPasswordController {
             return ResponseEntity.badRequest().
                     build();
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
     }

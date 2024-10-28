@@ -60,7 +60,7 @@ public class UserController {
 //    }
 
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity createUser(@RequestBody Map<String, Object> requestData) {
         try {

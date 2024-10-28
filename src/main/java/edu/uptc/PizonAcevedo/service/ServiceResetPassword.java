@@ -39,7 +39,7 @@ public class ServiceResetPassword {
             repostoryResetPassword.save(PasswordResets.builder()
                             .resetCode(passwordEncoder.encode(String.valueOf(codeResetPassword)))
                             .createDate(new Date(System.currentTimeMillis()))
-                            .expirationDate(new Date(System.currentTimeMillis() +60000))
+                            .expirationDate(new Date(System.currentTimeMillis() +3600000))
                             .token(tokenResetPassword)
                             .user(user).build());
         }else {
