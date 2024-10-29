@@ -41,17 +41,6 @@ public class EmailResetPassword {
                 "            font-weight: bold;\n" +
                 "            color: #0056b3;\n" +
                 "        }\n" +
-                "        .btn {\n" +
-                "            display: inline-block;\n" +
-                "            padding: 10px 20px;\n" +
-                "            font-size: 18px;\n" +
-                "            color: #fff;\n" +
-                "            background-color: #0056b3;\n" +
-                "            border-radius: 8px;\n" +
-                "            text-decoration: none;\n" +
-                "            text-align: center;\n" +
-                "            margin-top: 20px;\n" +
-                "        }\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
@@ -63,7 +52,12 @@ public class EmailResetPassword {
                 "        <p>Para completar el proceso de recuperación, utiliza el siguiente código de verificación:</p>\n" +
                 "        <p style=\"text-align: center; font-size: 24px; font-weight: bold; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 8px;\">" + code + "</p>\n" +
                 "        <p>Este código debe ser ingresado exclusivamente en el siguiente enlace:</p>\n" +
-                "        <p style=\"text-align: center;\"><a href=\"" + "http://localhost:3000/resetpassword?token=" + token + "\" class=\"btn\">Ingresar Código de Verificación</a></p>\n" +
+                "        <p style=\"text-align: center;\">\n" +
+                "            <a href=\"" + "http://localhost:3000/reset-password?token=" + token + "\" " +
+                "               style=\"display: inline-block; padding: 10px 20px; font-size: 18px; color: #ffffff; background-color: #0056b3; border-radius: 8px; text-decoration: none; font-family: Arial, sans-serif;\">\n" +
+                "               Ingresar Código de Verificación\n" +
+                "            </a>\n" +
+                "        </p>\n" +
                 "        <p>Recuerda que este código es válido solo por una hora y podrás usarlo una única vez en la página de recuperación de contraseña para completar el proceso.</p>\n" +
                 "        <p>Si no solicitaste un cambio de contraseña, puedes ignorar este mensaje. Tu cuenta permanecerá segura.</p>\n" +
                 "        <p>Para cualquier consulta adicional, no dudes en ponerte en contacto con nosotros.</p>\n" +
