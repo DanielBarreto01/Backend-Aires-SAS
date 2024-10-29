@@ -13,7 +13,7 @@ public class EmailResetPassword {
                 "<p style=\"text-align: center; font-size: 24px; font-weight: bold; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 8px; color: #333;\">" + code + "</p>" +
                 "<p style=\"font-size: 18px; color: #333;\">Este código debe ser ingresado exclusivamente en el siguiente enlace:</p>" +
                 "<div style=\"text-align: center; margin-top: 20px;\">" +
-                "<a href=\"" + "https://frontend-aires-sas.vercel.app/resetpassword?token=" + token + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 18px; color: #ffffff; background-color: #0056b3; border-radius: 8px; text-decoration: none;\">Ingresar Código de Verificación</a>" +
+                "<a href=\"" + "https://frontend-aires-sas.vercel.app/reset-password?token=" + token + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 18px; color: #ffffff; background-color: #0056b3; border-radius: 8px; text-decoration: none;\">Ingresar Código de Verificación</a>" +
                 "</div>" +
                 "<p style=\"font-size: 18px; color: #333; margin-top: 20px;\">Recuerda que este código es válido solo por una hora y podrás usarlo una única vez en la página de recuperación de contraseña para completar el proceso.</p>" +
                 "<p style=\"font-size: 18px; color: #333;\">Si no solicitaste un cambio de contraseña, puedes ignorar este mensaje. Tu cuenta permanecerá segura.</p>" +
