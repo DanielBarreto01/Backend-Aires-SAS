@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                         auth.requestMatchers("/login").permitAll();
                         auth.requestMatchers("/reset-password/create").permitAll();
+                        auth.requestMatchers("/reset-password/validateStatusToken/**").permitAll();
                         auth.requestMatchers("/reset-password/changePassword/**").permitAll();
                         auth.anyRequest().authenticated();
                 })
