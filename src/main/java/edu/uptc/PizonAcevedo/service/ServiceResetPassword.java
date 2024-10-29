@@ -50,6 +50,9 @@ public class ServiceResetPassword {
 
 
     public Map validateStatusToken(String token) {
+        if(token.isBlank() || token.isEmpty()){
+            return null;
+        }
         PasswordResets passwordResets = repostoryResetPassword.findByStatusAndToken(true, token);
         System.out.println(passwordResets);
         System.out.println(passwordResets.isStatus());
