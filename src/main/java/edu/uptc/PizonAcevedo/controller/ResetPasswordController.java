@@ -46,7 +46,6 @@ public class ResetPasswordController {
         }
     }
     @RequestMapping(value = "/changePassword/{token}", method = RequestMethod.POST, produces = "application/json")
-
     public  ResponseEntity changePassword(@PathVariable String token, @RequestBody Map<String, String> requestData) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
