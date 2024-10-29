@@ -53,7 +53,7 @@ public class EmailResetPassword {
                 "        <p style=\"text-align: center; font-size: 24px; font-weight: bold; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 8px;\">" + code + "</p>\n" +
                 "        <p>Este código debe ser ingresado exclusivamente en el siguiente enlace:</p>\n" +
                 "        <p style=\"text-align: center;\">\n" +
-                "            <a href=\"" + "http://localhost:3000/reset-password?token=" + token + "\" " +
+                "            <a href=\"" + "https://frontend-aires-sas.vercel.app/reset-password?token=" + token + "\" " +
                 "               style=\"display: inline-block; padding: 10px 20px; font-size: 18px; color: #ffffff; background-color: #0056b3; border-radius: 8px; text-decoration: none; font-family: Arial, sans-serif;\">\n" +
                 "               Ingresar Código de Verificación\n" +
                 "            </a>\n" +
