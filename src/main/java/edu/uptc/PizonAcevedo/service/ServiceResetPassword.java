@@ -26,6 +26,8 @@ public class ServiceResetPassword {
     @Autowired
     CredentialRepository credentialRepository;
 
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public void generateResetPassword(String email) throws MessagingException {
         System.out.println(email);
         UserEntity user = userRepo.findByEmail(email);
@@ -54,9 +56,6 @@ public class ServiceResetPassword {
             return null;
         }
         PasswordResets passwordResets = repostoryResetPassword.findByStatusAndToken(true, token);
-        System.out.println(passwordResets);
-        System.out.println(passwordResets.isStatus());
-        System.out.println(passwordResets.getExpirationDate().after(new Date()));
         if(passwordResets.isStatus() && passwordResets.getExpirationDate().after(new Date())){
             System.out.println(passwordResets.getExpirationDate());
             return new HashMap() {{
@@ -67,15 +66,47 @@ public class ServiceResetPassword {
         return null;
     }
 
+//    public boolean validateCode(String token, String verificationCode) {
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        PasswordResets passwordResets = repostoryResetPassword.findByStatusAndToken(true, token);
+//        if(passwordResets.isStatus() && passwordEncoder.matches(verificationCode, passwordResets.getResetCode())){
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public boolean changePasswordService(String token, String password, String verificationCode) {
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        PasswordResets passwordResets = repostoryResetPassword.findByStatusAndToken(true, token);
+//        if (passwordResets.isStatus() && passwordEncoder.matches(verificationCode, passwordResets.getResetCode())) {
+//            repostoryResetPassword.deactivateResetStatus(token);
+//            credentialRepository.updatePasswordByUserId(password, passwordResets.getUser().getId());
+//            return true;
+//        }
+//        return false;
+//    }
+
+
+
+    public boolean validateCode(String token, String verificationCode) {
+        return isValidReset(token, verificationCode);
+    }
+
     public boolean changePasswordService(String token, String password, String verificationCode) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        PasswordResets passwordResets = repostoryResetPassword.findByStatusAndToken(true, token);
-        System.out.println(passwordEncoder.matches(verificationCode, passwordResets.getResetCode()) + "   copara codigos");
-        if (passwordResets.isStatus() && passwordEncoder.matches(verificationCode, passwordResets.getResetCode())) {
+        if (isValidReset(token, verificationCode)) {
+            credentialRepository.updatePasswordByUserId(password, getUserIdByToken(token));
             repostoryResetPassword.deactivateResetStatus(token);
-            credentialRepository.updatePasswordByUserId(password, passwordResets.getUser().getId());
             return true;
         }
         return false;
+    }
+
+    private boolean isValidReset(String token, String verificationCode) {
+        PasswordResets reset = repostoryResetPassword.findByStatusAndToken(true, token);
+        return reset != null && passwordEncoder.matches(verificationCode, reset.getResetCode());
+    }
+
+    private int getUserIdByToken(String token) {
+        return repostoryResetPassword.findByStatusAndToken(true, token).getUser().getId();
     }
 }

@@ -45,6 +45,21 @@ public class ResetPasswordController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @RequestMapping(value = "/validateCode/{token}", method = RequestMethod.GET, produces = "application/json")
+    public  ResponseEntity validateCode(@PathVariable String token, @RequestParam String verificationCode) {
+        try {
+            if(serviceResetPassword.validateCode(token, verificationCode)){
+                return new ResponseEntity<>("Código de verificación correcto", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Código de verificación erroneo", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @RequestMapping(value = "/changePassword/{token}", method = RequestMethod.POST, produces = "application/json")
     public  ResponseEntity changePassword(@PathVariable String token, @RequestBody Map<String, String> requestData) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
