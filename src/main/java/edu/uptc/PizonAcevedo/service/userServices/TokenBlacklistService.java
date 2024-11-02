@@ -1,7 +1,7 @@
-package edu.uptc.PizonAcevedo.service;
+package edu.uptc.PizonAcevedo.service.userServices;
 
-import edu.uptc.PizonAcevedo.domain.model.BlacklistedToken;
-import edu.uptc.PizonAcevedo.domain.repository.BlacklistedTokenRepository;
+import edu.uptc.PizonAcevedo.domain.model.userModel.BlacklistedToken;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.BlacklistedTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,10 @@
 package edu.uptc.PizonAcevedo.controller;
 
-import edu.uptc.PizonAcevedo.domain.model.ERole;
-import edu.uptc.PizonAcevedo.domain.model.Roles;
-import edu.uptc.PizonAcevedo.domain.model.UserEntity;
-import edu.uptc.PizonAcevedo.service.TokenBlacklistService;
-import edu.uptc.PizonAcevedo.service.UserMgmt;
+import edu.uptc.PizonAcevedo.domain.model.userModel.ERole;
+import edu.uptc.PizonAcevedo.domain.model.userModel.Roles;
+import edu.uptc.PizonAcevedo.domain.model.userModel.UserEntity;
+import edu.uptc.PizonAcevedo.service.userServices.TokenBlacklistService;
+import edu.uptc.PizonAcevedo.service.userServices.UserMgmt;
 
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;

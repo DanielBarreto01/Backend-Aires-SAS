@@ -3,7 +3,7 @@ package edu.uptc.PizonAcevedo.config;
 import edu.uptc.PizonAcevedo.security.filtersJwt.JwtAuthenticationFilter;
 import edu.uptc.PizonAcevedo.security.filtersJwt.JwtAuthorizationFilter;
 import edu.uptc.PizonAcevedo.security.jwt.JwtUtils;
-import edu.uptc.PizonAcevedo.service.LoginMgmt;
+import edu.uptc.PizonAcevedo.service.userServices.LoginMgmt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,6 +50,8 @@ public class SecurityConfig {
                         auth.requestMatchers("/reset-password/validateStatusToken/**").permitAll();
                         auth.requestMatchers("/reset-password/changePassword/**").permitAll();
                         auth.requestMatchers("/reset-password/validateCode/**").permitAll();
+                        auth.requestMatchers("/equipments/**").permitAll();
+                        auth.requestMatchers("/clients/**").permitAll();
                         auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

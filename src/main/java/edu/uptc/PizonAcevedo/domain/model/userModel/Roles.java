@@ -1,4 +1,4 @@
-package edu.uptc.PizonAcevedo.domain.model;
+package edu.uptc.PizonAcevedo.domain.model.userModel;
 
 import jakarta.persistence.*;
 import lombok.*;

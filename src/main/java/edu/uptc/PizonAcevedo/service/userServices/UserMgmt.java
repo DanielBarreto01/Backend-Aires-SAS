@@ -1,11 +1,11 @@
-package edu.uptc.PizonAcevedo.service;
+package edu.uptc.PizonAcevedo.service.userServices;
 
-import edu.uptc.PizonAcevedo.domain.model.Credential;
-import edu.uptc.PizonAcevedo.domain.model.ERole;
-import edu.uptc.PizonAcevedo.domain.model.Roles;
-import edu.uptc.PizonAcevedo.domain.repository.CredentialRepository;
-import edu.uptc.PizonAcevedo.domain.repository.UserRepository;
-import edu.uptc.PizonAcevedo.domain.model.UserEntity;
+import edu.uptc.PizonAcevedo.domain.model.userModel.Credential;
+import edu.uptc.PizonAcevedo.domain.model.userModel.ERole;
+import edu.uptc.PizonAcevedo.domain.model.userModel.Roles;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.CredentialRepository;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.UserRepository;
+import edu.uptc.PizonAcevedo.domain.model.userModel.UserEntity;
 import edu.uptc.PizonAcevedo.service.email.IEmailService;
 import edu.uptc.PizonAcevedo.util.Email;
 import jakarta.mail.MessagingException;

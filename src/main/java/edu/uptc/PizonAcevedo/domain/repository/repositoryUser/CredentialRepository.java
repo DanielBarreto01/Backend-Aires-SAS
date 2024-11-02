@@ -1,6 +1,6 @@
-package edu.uptc.PizonAcevedo.domain.repository;
+package edu.uptc.PizonAcevedo.domain.repository.repositoryUser;
 
-import edu.uptc.PizonAcevedo.domain.model.Credential;
+import edu.uptc.PizonAcevedo.domain.model.userModel.Credential;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

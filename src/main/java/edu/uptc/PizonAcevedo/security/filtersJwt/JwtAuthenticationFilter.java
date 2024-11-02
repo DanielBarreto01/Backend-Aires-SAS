@@ -1,7 +1,7 @@
 package edu.uptc.PizonAcevedo.security.filtersJwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.uptc.PizonAcevedo.domain.model.Credential;
+import edu.uptc.PizonAcevedo.domain.model.userModel.Credential;
 import edu.uptc.PizonAcevedo.security.jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

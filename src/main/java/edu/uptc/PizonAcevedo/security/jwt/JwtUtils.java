@@ -1,8 +1,7 @@
 package edu.uptc.PizonAcevedo.security.jwt;
 
-import edu.uptc.PizonAcevedo.domain.model.Roles;
-import edu.uptc.PizonAcevedo.domain.model.UserEntity;
-import edu.uptc.PizonAcevedo.domain.repository.CredentialRepository;
+import edu.uptc.PizonAcevedo.domain.model.userModel.UserEntity;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.CredentialRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

@@ -1,9 +1,8 @@
-package edu.uptc.PizonAcevedo.service;
+package edu.uptc.PizonAcevedo.service.userServices;
 
-import edu.uptc.PizonAcevedo.domain.model.Credential;
-import edu.uptc.PizonAcevedo.domain.model.UserEntity;
-import edu.uptc.PizonAcevedo.domain.repository.CredentialRepository;
-import edu.uptc.PizonAcevedo.domain.repository.UserRepository;
+import edu.uptc.PizonAcevedo.domain.model.userModel.Credential;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.CredentialRepository;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

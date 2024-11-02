@@ -1,4 +1,4 @@
-package edu.uptc.PizonAcevedo.domain.model;
+package edu.uptc.PizonAcevedo.domain.model.userModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

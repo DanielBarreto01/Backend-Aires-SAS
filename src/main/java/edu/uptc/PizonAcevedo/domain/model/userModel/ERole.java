@@ -1,4 +1,4 @@
-package edu.uptc.PizonAcevedo.domain.model;
+package edu.uptc.PizonAcevedo.domain.model.userModel;
 
 public enum ERole {
     ADMIN,

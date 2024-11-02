@@ -1,19 +1,17 @@
 package edu.uptc.PizonAcevedo.security.filtersJwt;
 
-import edu.uptc.PizonAcevedo.domain.repository.BlacklistedTokenRepository;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.BlacklistedTokenRepository;
 import edu.uptc.PizonAcevedo.security.jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;

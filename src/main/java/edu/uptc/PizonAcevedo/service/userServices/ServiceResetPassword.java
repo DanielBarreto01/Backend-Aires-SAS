@@ -1,16 +1,16 @@
-package edu.uptc.PizonAcevedo.service;
+package edu.uptc.PizonAcevedo.service.userServices;
 
-import edu.uptc.PizonAcevedo.domain.model.UserEntity;
-import edu.uptc.PizonAcevedo.domain.repository.CredentialRepository;
-import edu.uptc.PizonAcevedo.domain.repository.UserRepository;
+import edu.uptc.PizonAcevedo.domain.model.userModel.UserEntity;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.CredentialRepository;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.UserRepository;
 import edu.uptc.PizonAcevedo.service.email.IEmailService;
-import edu.uptc.PizonAcevedo.domain.model.PasswordResets;
+import edu.uptc.PizonAcevedo.domain.model.userModel.PasswordResets;
 import edu.uptc.PizonAcevedo.util.EmailResetPassword;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import edu.uptc.PizonAcevedo.domain.repository.RepositoryResetPassword;
+import edu.uptc.PizonAcevedo.domain.repository.repositoryUser.RepositoryResetPassword;
 
 import java.util.*;
 
