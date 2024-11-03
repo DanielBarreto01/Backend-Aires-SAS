@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class EquipmentController {
     @Autowired
     EquipmentService equipmentService;
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/create/{userId}", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity createEquipment(@PathVariable int userId, @RequestBody EquipmentEntity equipmentEntity) { //@RequestBody Map<String, Object> requestData
         try {
@@ -52,6 +53,7 @@ public class EquipmentController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/getEquipments", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getEquipments() {
         List<EquipmentEntity> equipments = equipmentService.getEquipments();
@@ -61,6 +63,7 @@ public class EquipmentController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/getEquipmentsAvailable", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getEquipmentsAvailable(){
         List<EquipmentEntity> equipments = equipmentService.getEquipmentsAvailable();
@@ -70,6 +73,7 @@ public class EquipmentController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/update/{equipmentId}", method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity updateClient(@PathVariable int equipmentId, @RequestBody Map<String, Object> requestData) {
         try {

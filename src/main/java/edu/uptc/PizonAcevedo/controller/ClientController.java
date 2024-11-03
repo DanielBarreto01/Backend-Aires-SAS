@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/create/{equipmentId}", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity createClient(@PathVariable int equipmentId, @RequestBody Map<String, Object> requestData) {
         try {
@@ -51,11 +53,13 @@ public class ClientController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/getClients", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getClients() {
         return ResponseEntity.ok(clientService.getClients());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/update/{clientId}", method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity updateClient(@PathVariable int clientId, @RequestBody Map<String, Object> requestData) {
         try {
