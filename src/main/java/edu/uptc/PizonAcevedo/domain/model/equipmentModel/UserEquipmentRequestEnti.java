@@ -40,4 +40,11 @@ public class UserEquipmentRequestEnti {
     @NotNull
     @Getter @Setter
     private Date generationDate = new Date();
+
+    @PrePersist
+    public void prePersist() {
+        if (!this.state) {
+            this.state = true;  // Establecer valor por defecto si no se ha asignado
+        }
+    }
 }

@@ -25,12 +25,14 @@ public class EquipmentEntity {
     private String name;
 
     @NotNull
-    @Column(length = 15)
     @Getter @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
     private EnumEquipment equipmentType;
 
     @NotNull
     @Getter @Setter
+    @Column(unique = true)
     private int serialNumber;
 
     @NotNull
@@ -45,6 +47,11 @@ public class EquipmentEntity {
     @NotNull
     @Getter @Setter
     private int iventoryNumber;
+
+    @NotNull
+    @Column(length = 600)
+    @Getter @Setter
+    private String pathImage;
 
     @ManyToOne
     @JoinColumn(name = "id_client", nullable = true)  // Clave foránea que apunta a la tabla Client

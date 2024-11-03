@@ -30,6 +30,7 @@ public class ClientEntity {
 
     @NotNull
     @Getter @Setter
+    @Column(unique = true)
     private long numberIdentification;
 
     @NotNull
@@ -37,7 +38,7 @@ public class ClientEntity {
     private long phoneNumber;
 
     @NotNull
-    @Column(length = 150)
+    @Column(unique = true, length = 150)
     @Getter @Setter
     private String email;
 
@@ -45,4 +46,9 @@ public class ClientEntity {
     @Column(length = 256)
     @Getter @Setter
     private String address;
+
+    @NotNull
+    @Column(length = 600)
+    @Getter @Setter
+    private String pathImage;
 }

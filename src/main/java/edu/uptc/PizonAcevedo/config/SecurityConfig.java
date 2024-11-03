@@ -52,6 +52,7 @@ public class SecurityConfig {
                         auth.requestMatchers("/reset-password/validateCode/**").permitAll();
                         auth.requestMatchers("/equipments/**").permitAll();
                         auth.requestMatchers("/clients/**").permitAll();
+                        auth.requestMatchers("/users/**").permitAll();
                         auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
