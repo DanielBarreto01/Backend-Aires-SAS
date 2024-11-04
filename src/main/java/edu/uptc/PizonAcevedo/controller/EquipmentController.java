@@ -39,11 +39,11 @@ public class EquipmentController {
 //                .pathImage((String) requestData.get("pathImage"))
 //                .build();
             EquipmentEntity newEquipmentEntity = equipmentService.createEquipmentWithMaintenanceRequest(userId, equipmentEntity);
-            // return ResponseEntity.ok(equipmentEntity);
+
             if (newEquipmentEntity != null) {
-                return ResponseEntity.ok(newEquipmentEntity);
+                return ResponseEntity.ok("Registro de equipo exitoso");
             }
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("No se pudo registrar el equipo, usuario no valido");
         } catch (DataIntegrityViolationException e) {
             String errorMessage = e.getRootCause().getMessage();
             if (errorMessage.contains("serial_number")) {

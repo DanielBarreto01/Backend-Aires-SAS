@@ -32,24 +32,23 @@ public class EquipmentEntity {
 
     @NotNull
     @Getter @Setter
-    @Column(unique = true)
-    private int serialNumber;
+    @Column(unique = true, length = 100)
+    private String serialNumber;
 
     @NotNull
-    @Column(length = 50)
     @Getter @Setter
     private String brand;
 
     @NotNull
     @Getter @Setter
-    private int modelNumber;
+    @Column(length = 100)
+    private String modelNumber;
 
     @NotNull
     @Getter @Setter
     private int iventoryNumber;
 
-    @NotNull
-    @Column(length = 600)
+    @Column(length = 600, nullable = true)
     @Getter @Setter
     private String pathImage;
 

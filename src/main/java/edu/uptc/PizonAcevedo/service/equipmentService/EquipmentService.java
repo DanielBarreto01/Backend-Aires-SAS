@@ -85,9 +85,9 @@ public class EquipmentService {
         if(equipment != null) {
             equipment.setName((String) requestData.get("name"));
             equipment.setEquipmentType(EnumEquipment.valueOf((String) requestData.get("equipmentType")));
-            equipment.setSerialNumber(Integer.parseInt(requestData.get("serialNumber").toString()));
+            equipment.setSerialNumber((String) requestData.get("serialNumber"));
             equipment.setBrand((String) requestData.get("brand"));
-            equipment.setModelNumber(Integer.parseInt(requestData.get("modelNumber").toString()));
+            equipment.setModelNumber((String) requestData.get("modelNumber").toString());
             equipment.setIventoryNumber(Integer.parseInt(requestData.get("iventoryNumber").toString()));
             equipment.setPathImage((String) requestData.get("pathImage"));
             equipmentRepository.save(equipment);

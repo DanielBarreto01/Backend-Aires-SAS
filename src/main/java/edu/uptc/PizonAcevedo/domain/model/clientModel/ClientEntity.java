@@ -47,7 +47,6 @@ public class ClientEntity {
     @Getter @Setter
     private String address;
 
-    @NotNull
     @Column(length = 600)
     @Getter @Setter
     private String pathImage;
