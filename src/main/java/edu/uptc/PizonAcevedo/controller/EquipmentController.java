@@ -90,4 +90,15 @@ public class EquipmentController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/getEquipmentsByIdClient/{clientId}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getEquipmequipmetsByIdClient(@PathVariable int clientId){
+        List<EquipmentEntity> equipments = equipmentService.getEquipmentsByClientId(clientId);
+        if(equipments != null){
+            return ResponseEntity.ok(equipments);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
 }

@@ -105,4 +105,13 @@ public class EquipmentService {
             return false;
         }
     }
+
+    public List<EquipmentEntity> getEquipmentsByClientId(Integer clientId){
+        try {
+            return equipmentRepository.findByClientId(clientId);
+        } catch (Exception e) {
+            logger.error("Error al obtener los equipos por cliente: {}", e.getMessage(), e);
+            return null;
+        }
+    }
 }

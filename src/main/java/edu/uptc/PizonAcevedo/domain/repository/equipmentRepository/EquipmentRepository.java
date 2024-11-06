@@ -29,4 +29,6 @@ public interface EquipmentRepository extends JpaRepository<EquipmentEntity, Inte
     @Transactional
     @Query("UPDATE EquipmentEntity e SET e.client.id = :clientId WHERE e.id IN :equipmentIds")
     void linkEquipmentToClient(Integer clientId, List<Integer> equipmentIds);
+
+    List<EquipmentEntity> findByClientId(Integer clientId);
 }

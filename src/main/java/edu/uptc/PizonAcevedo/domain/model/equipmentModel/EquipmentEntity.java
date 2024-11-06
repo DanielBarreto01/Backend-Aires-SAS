@@ -52,6 +52,17 @@ public class EquipmentEntity {
     @Getter @Setter
     private String pathImage;
 
+    @NotNull
+    @Getter @Setter
+    private boolean equipmentState = true;
+
+    @PrePersist
+    public void prePersist() {
+        if (!this.equipmentState) {
+            this.equipmentState = true;  // Establecer valor por defecto si no se ha asignado
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "id_client", nullable = true)  // Clave foránea que apunta a la tabla Client
     private ClientEntity client;

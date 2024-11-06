@@ -50,4 +50,15 @@ public class ClientEntity {
     @Column(length = 600)
     @Getter @Setter
     private String pathImage;
+
+    @NotNull
+    @Getter @Setter
+    private boolean clientState = true;
+
+    @PrePersist
+    public void prePersist() {
+        if (!this.clientState) {
+            this.clientState = true;  // Establecer valor por defecto si no se ha asignado
+        }
+    }
 }
