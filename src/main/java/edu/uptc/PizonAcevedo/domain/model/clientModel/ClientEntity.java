@@ -4,34 +4,21 @@ package edu.uptc.PizonAcevedo.domain.model.clientModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name ="clientes")
+@Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ClientEntity {
+@SuperBuilder
+public abstract class ClientEntity {
 
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
     private Integer id;
-
-    @NotNull
-    @Column(length = 70)
-    @Getter @Setter
-    private String name;
-
-    @NotNull
-    @Column(length = 3)
-    @Getter @Setter
-    private String typeIdentification;
-
-    @NotNull
-    @Getter @Setter
-    @Column(unique = true)
-    private long numberIdentification;
 
     @NotNull
     @Getter @Setter
