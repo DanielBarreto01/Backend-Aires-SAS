@@ -1,6 +1,5 @@
 package edu.uptc.PizonAcevedo.controller;
 
-import edu.uptc.PizonAcevedo.domain.model.clientModel.ClientEntity;
 import edu.uptc.PizonAcevedo.domain.model.clientModel.JuridicalPersons;
 import edu.uptc.PizonAcevedo.domain.model.clientModel.NaturalPerson;
 import edu.uptc.PizonAcevedo.service.clientService.ClientService;
@@ -40,7 +39,7 @@ public class ClientController {
                     .address((String) requestData.get("address"))
                     .pathImage((String) requestData.get("pathImage"))
                     .build();
-            return ResponseEntity.ok(clientService.saveClient(equipmentId, naturalPerson, ((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(Collectors.toList())));
+            return ResponseEntity.ok(clientService.saveClientNatural(naturalPerson, ((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(Collectors.toList())));
         } catch (DataIntegrityViolationException e) {
             String errorMessage = e.getRootCause().getMessage();
             if (errorMessage.contains("email")) {
@@ -78,28 +77,29 @@ public class ClientController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/create/Juridical-person/{equipmentId}", method = RequestMethod.POST, produces = "application/json")
-    public void createClientJuridical(@PathVariable int equipmentId, @RequestBody Map<String, Object> requestData) {
-//        try {
-//            JuridicalPersons naturalPerson = JuridicalPersons.builder()
-//                    .nameCompany((String) requestData.get("nameCompany"))
-//                    .lastName((String) requestData.get("lastName"))
-//                    .typeIdentification((String) requestData.get("typeIdentification"))
-//                    .numberIdentification((Integer) requestData.get("numberIdentification"))
-//                    .phoneNumber(Long.parseLong(requestData.get("phoneNumber").toString()))
-//                    .email((String) requestData.get("email"))
-//                    .address((String) requestData.get("address"))
-//                    .pathImage((String) requestData.get("pathImage"))
-//                    .build();
-//            return ResponseEntity.ok(clientService.saveClient(equipmentId, naturalPerson, ((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(Collectors.toList())));
-//        } catch (DataIntegrityViolationException e) {
-//            String errorMessage = e.getRootCause().getMessage();
-//            if (errorMessage.contains("email")) {
-//                return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
-//            } else if (errorMessage.contains("number_identification")) {
-//                return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
-//            }
-//            return ResponseEntity.internalServerError().build();
-//        }
+    public ResponseEntity createClientJuridical(@PathVariable int equipmentId, @RequestBody Map<String, Object> requestData) {
+        try {
+            JuridicalPersons naturalPerson = JuridicalPersons.builder()
+                    .nameCompany((String) requestData.get("nameCompany"))
+                    .socialReason((String) requestData.get("socialReason"))
+                    .nameLegalRepresentative((String) requestData.get("nameLegalRepresentative"))
+                    .phoneNumberLegalRepresentative((Integer) requestData.get("phoneNumberLegalRepresentative"))
+                    .emailLegalRepresentative((String) requestData.get("emailLegalRepresentative"))
+                    .phoneNumber(Long.parseLong(requestData.get("phoneNumber").toString()))
+                    .email((String) requestData.get("email"))
+                    .address((String) requestData.get("address"))
+                    .pathImage((String) requestData.get("pathImage"))
+                    .build();
+            return ResponseEntity.ok(clientService.saveClientJuridical(naturalPerson, ((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(Collectors.toList())));
+        } catch (DataIntegrityViolationException e) {
+            String errorMessage = e.getRootCause().getMessage();
+            if (errorMessage.contains("email")) {
+                return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
+            } else if (errorMessage.contains("number_identification")) {
+                return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
+            }
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")

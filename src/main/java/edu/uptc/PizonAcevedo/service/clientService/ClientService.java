@@ -1,19 +1,19 @@
 package edu.uptc.PizonAcevedo.service.clientService;
 
 import edu.uptc.PizonAcevedo.domain.model.clientModel.ClientEntity;
+import edu.uptc.PizonAcevedo.domain.model.clientModel.JuridicalPersons;
 import edu.uptc.PizonAcevedo.domain.model.clientModel.NaturalPerson;
 import edu.uptc.PizonAcevedo.domain.repository.clientRepository.ClientRepository;
+import edu.uptc.PizonAcevedo.domain.repository.clientRepository.JuridicalPersonsRepository;
 import edu.uptc.PizonAcevedo.domain.repository.clientRepository.NaturalPersonRepository;
 import edu.uptc.PizonAcevedo.service.equipmentService.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -27,9 +27,12 @@ public class ClientService {
     NaturalPersonRepository naturalPersonRepository;
 
     @Autowired
+    JuridicalPersonsRepository juridicalPersonsRepository;
+
+    @Autowired
     EquipmentService equipmentService;
 
-    public NaturalPerson saveClient(int idEquipment, NaturalPerson naturalPerson, List<Integer> idsEquipments){
+    public NaturalPerson saveClientNatural(NaturalPerson naturalPerson, List<Integer> idsEquipments){
             NaturalPerson client =  naturalPersonRepository.save(naturalPerson);
             try {
                 idsEquipments.forEach(id -> {equipmentService.updateClientId(id, client.getId());});
@@ -49,6 +52,19 @@ public class ClientService {
 
     }
 
+
+    public JuridicalPersons saveClientJuridical(JuridicalPersons juridicalPersons, List<Integer> idsEquipments){
+        JuridicalPersons client =  juridicalPersonsRepository.save(juridicalPersons);
+        try {
+            idsEquipments.forEach(id -> {equipmentService.updateClientId(id, client.getId());});
+            return client;
+        } catch (Exception e) {
+            logger.error("Error al crear el cleinte: {}", e.getMessage(), e);
+            return null;
+        }
+
+    }
+
     public List<ClientEntity> getClients(){
         try {
             return clientRepository.findAll();
@@ -58,7 +74,29 @@ public class ClientService {
         }
     }
 
-    public void updateClient(Integer clientId, Map<String, Object> requestData){
+    public void updateClientNatural(Integer clientId, Map<String, Object> requestData) {
+        NaturalPerson client = naturalPersonRepository.findById(clientId)
+                .orElse(null);
+        List <Integer> idsEquipments = null;
+        if(client != null) {
+            client.setName((String) requestData.get("name"));
+            client.setLastName((String) requestData.get("lastName"));
+            client.setTypeIdentification((String) requestData.get("typeIdentification"));
+            client.setNumberIdentification((Integer) requestData.get("numberIdentification"));
+            client.setPhoneNumber(Long.parseLong(requestData.get("phoneNumber").toString()));
+            client.setEmail((String) requestData.get("email"));
+            client.setAddress((String) requestData.get("address"));
+            client.setPathImage((String) requestData.get("pathImage"));
+            naturalPersonRepository.save(client);
+            idsEquipments = (((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(java.util.stream.Collectors.toList()));
+        }
+        try {
+            equipmentService.linkEquipmentToClient(clientId, idsEquipments);
+        } catch (Exception e) {
+            logger.error("Error al actualizar el cliente: {}", e.getMessage(), e);
+        }
+
+    }
 //        ClientEntity client = clientRepository.findById(clientId)
 //               .orElse(null);
 //        List <Integer> idsEquipments = null;
@@ -80,7 +118,7 @@ public class ClientService {
 //            logger.error("Error al actualizar el cliente: {}", e.getMessage(), e);
 //            return null;
 //        }
-    }
+   // }
 
 //    public boolean updateClient(Integer clientId, ClientEntity clientData, List<Integer> idsEquipments){
 //        ClientEntity client = clientRepository.findById(clientId)
