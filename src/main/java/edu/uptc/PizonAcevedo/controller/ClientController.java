@@ -33,7 +33,7 @@ public class ClientController {
                     .name((String) requestData.get("name"))
                     .lastName((String) requestData.get("lastName"))
                     .typeIdentification((String) requestData.get("typeIdentification"))
-                    .numberIdentification((Integer) requestData.get("numberIdentification"))
+                    .numberIdentification(Long.parseLong( requestData.get("numberIdentification").toString()))
                     .phoneNumber(Long.parseLong(requestData.get("phoneNumber").toString()))
                     .email((String) requestData.get("email"))
                     .address((String) requestData.get("address"))
@@ -81,6 +81,7 @@ public class ClientController {
         try {
             JuridicalPersons naturalPerson = JuridicalPersons.builder()
                     .nameCompany((String) requestData.get("nameCompany"))
+                    .numberIdentificationCompany((String) requestData.get("numberIdentificationCompany"))
                     .socialReason((String) requestData.get("socialReason"))
                     .nameLegalRepresentative((String) requestData.get("nameLegalRepresentative"))
                     .phoneNumberLegalRepresentative(Long.parseLong(requestData.get("phoneNumberLegalRepresentative").toString()))
@@ -95,8 +96,12 @@ public class ClientController {
             String errorMessage = e.getRootCause().getMessage();
             if (errorMessage.contains("email")) {
                 return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
-            } else if (errorMessage.contains("number_identification")) {
+            } else if (errorMessage.contains("number_identification_company")) {
                 return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
+            } else if (errorMessage.contains("social_reason")) {
+                return new ResponseEntity<>("La razon social ya está registrada.", HttpStatus.NOT_FOUND);
+            } else if(errorMessage.contains("name_company")){
+                return new ResponseEntity<>("El nombre de la empresa ya está registrado.", HttpStatus.NOT_FOUND);
             }
             return ResponseEntity.internalServerError().build();
         }

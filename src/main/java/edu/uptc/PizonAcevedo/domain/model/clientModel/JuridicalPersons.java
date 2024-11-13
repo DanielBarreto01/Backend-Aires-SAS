@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class JuridicalPersons extends ClientEntity{
 
     @NotNull(message = "El nombre de la empresa es obligatorio")
-    @Column(length = 50)
+    @Column(unique = true, length = 50)
     private String nameCompany;
 
     @NotNull(message = "El numero de identificacion de la empresa es obligatorio")
