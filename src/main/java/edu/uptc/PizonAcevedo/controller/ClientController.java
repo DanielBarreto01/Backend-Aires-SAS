@@ -26,8 +26,8 @@ public class ClientController {
     ClientService clientService;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value = "/create/natural-person/{equipmentId}", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity createClientNatural(@PathVariable int equipmentId, @RequestBody Map<String, Object> requestData) {
+    @RequestMapping(value = "/create/natural-person", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity createClientNatural(@RequestBody Map<String, Object> requestData) {
         try {
             NaturalPerson naturalPerson = NaturalPerson.builder()
                     .name((String) requestData.get("name"))
@@ -76,14 +76,14 @@ public class ClientController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value = "/create/Juridical-person/{equipmentId}", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity createClientJuridical(@PathVariable int equipmentId, @RequestBody Map<String, Object> requestData) {
+    @RequestMapping(value = "/create/Juridical-person", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity createClientJuridical(@RequestBody Map<String, Object> requestData) {
         try {
             JuridicalPersons naturalPerson = JuridicalPersons.builder()
                     .nameCompany((String) requestData.get("nameCompany"))
                     .socialReason((String) requestData.get("socialReason"))
                     .nameLegalRepresentative((String) requestData.get("nameLegalRepresentative"))
-                    .phoneNumberLegalRepresentative((Integer) requestData.get("phoneNumberLegalRepresentative"))
+                    .phoneNumberLegalRepresentative(Long.parseLong(requestData.get("phoneNumberLegalRepresentative").toString()))
                     .emailLegalRepresentative((String) requestData.get("emailLegalRepresentative"))
                     .phoneNumber(Long.parseLong(requestData.get("phoneNumber").toString()))
                     .email((String) requestData.get("email"))

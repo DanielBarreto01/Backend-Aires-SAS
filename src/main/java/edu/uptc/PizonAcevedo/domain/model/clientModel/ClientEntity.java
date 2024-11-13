@@ -1,6 +1,9 @@
 package edu.uptc.PizonAcevedo.domain.model.clientModel;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -12,6 +15,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "clientType")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = NaturalPerson.class, name = "NaturalPerson"),
+        @JsonSubTypes.Type(value = JuridicalPersons.class, name = "JuridicalPersons")
+})
 public abstract class ClientEntity {
 
     @Id
@@ -47,5 +55,28 @@ public abstract class ClientEntity {
         if (!this.clientState) {
             this.clientState = true;  // Establecer valor por defecto si no se ha asignado
         }
+    }
+
+    @Transient
+    private String clientType;
+
+    @PostLoad
+    public void setClientType() {
+        // Aquí asignas el tipo de cliente según la clase concreta.
+        if (this instanceof NaturalPerson) {
+            this.clientType = "NaturalPerson";
+        } else if (this instanceof JuridicalPersons) {
+            this.clientType = "JuridicalPersons";
+        }
+    }
+
+    @JsonProperty("clientType")
+    public String getClientType() {
+        if (this instanceof NaturalPerson) {
+            return "NaturalPerson";
+        } else if (this instanceof JuridicalPersons) {
+            return "JuridicalPersons";
+        }
+        return null; // Por si hay algún caso no esperado
     }
 }
