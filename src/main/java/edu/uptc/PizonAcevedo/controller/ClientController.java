@@ -97,7 +97,7 @@ public class ClientController {
         try {
             if(((String) requestData.get("clientType")).equals("JuridicalPersons"))
                 client = clientService.updateClientJuridical(clientId, requestData);
-            else clientService.updateClientNatural(clientId, requestData);
+            else client = clientService.updateClientNatural(clientId, requestData);
             if(client != null){
                 return ResponseEntity.ok("Cliente actualizado correctamente.");
             }
