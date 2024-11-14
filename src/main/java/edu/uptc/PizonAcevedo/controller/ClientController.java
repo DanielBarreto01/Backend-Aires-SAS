@@ -1,5 +1,6 @@
 package edu.uptc.PizonAcevedo.controller;
 
+import edu.uptc.PizonAcevedo.domain.model.clientModel.ClientEntity;
 import edu.uptc.PizonAcevedo.domain.model.clientModel.JuridicalPersons;
 import edu.uptc.PizonAcevedo.domain.model.clientModel.NaturalPerson;
 import edu.uptc.PizonAcevedo.service.clientService.ClientService;
@@ -49,30 +50,6 @@ public class ClientController {
             }
             return ResponseEntity.internalServerError().build();
         }
-//        try {
-//            ClientEntity clientEntity = ClientEntity.builder()
-//                    .name((String) requestData.get("name"))
-//                    .typeIdentification((String) requestData.get("typeIdentification"))
-//                    .numberIdentification((Integer) requestData.get("numberIdentification"))
-//                    .phoneNumber(Long.parseLong(requestData.get("phoneNumber").toString()))
-//                    .email((String) requestData.get("email"))
-//                    .address((String) requestData.get("address"))
-//                    .pathImage((String) requestData.get("pathImage"))
-//                    .build();
-//            ClientEntity client = clientService.saveClient(equipmentId, clientEntity, ((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(Collectors.toList()));
-//            if (client != null) {
-//                return ResponseEntity.ok("El cliente " + client.getName() + " se creo exitosamente");
-//            }
-//            return new ResponseEntity<>("No se puedo crear el cliente.", HttpStatus.NOT_FOUND);
-//        } catch (DataIntegrityViolationException e) {
-//            String errorMessage = e.getRootCause().getMessage();
-//            if (errorMessage.contains("email")) {
-//                return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
-//            } else if (errorMessage.contains("number_identification")) {
-//                return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
-//            }
-//            return ResponseEntity.internalServerError().build();
-//        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -115,21 +92,30 @@ public class ClientController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/update/{clientId}", method = RequestMethod.PATCH, produces = "application/json")
-    public void updateClient(@PathVariable int clientId, @RequestBody Map<String, Object> requestData) {
-//        try {
-//            ClientEntity clientData = clientService.updateClient(clientId, requestData);
-//            if (clientData != null){
-//                return ResponseEntity.ok("El cliente se actualizó exitosamente");
-//            }
-//            return new ResponseEntity<>("No se encontro el cliente.", HttpStatus.NOT_FOUND);
-//        } catch (DataIntegrityViolationException e) {
-//            String errorMessage = e.getRootCause().getMessage();
-//            if (errorMessage.contains("email")) {
-//                return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
-//            } else if (errorMessage.contains("number_identification")) {
-//                return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
-//            }
-//            return ResponseEntity.internalServerError().build();
-//        }
+    public ResponseEntity updateClient(@PathVariable int clientId, @RequestBody Map<String, Object> requestData) {
+        ClientEntity client = null;
+        try {
+            if(((String) requestData.get("clientType")).equals("JuridicalPersons"))
+                client = clientService.updateClientJuridical(clientId, requestData);
+            else clientService.updateClientNatural(clientId, requestData);
+            if(client != null){
+                return ResponseEntity.ok("Cliente actualizado correctamente.");
+            }
+            return new ResponseEntity<>("No se encontro el cliente.", HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            String errorMessage = e.getRootCause().getMessage();
+            if (errorMessage.contains("email")) {
+                return new ResponseEntity<>("El correo electrónico ya está registrado.", HttpStatus.NOT_FOUND);
+            } else if (errorMessage.contains("number_identification_company")) {
+                return new ResponseEntity<>("Este número de identificación de la empresa ya está registrado.", HttpStatus.NOT_FOUND);
+            } else if (errorMessage.contains("number_identification")) {
+                return new ResponseEntity<>("Este número de identificación ya está registrado.", HttpStatus.NOT_FOUND);
+            } else if (errorMessage.contains("social_reason")) {
+                return new ResponseEntity<>("La razón social ya está registrada.", HttpStatus.NOT_FOUND);
+            } else if (errorMessage.contains("name_company")) {
+                return new ResponseEntity<>("El nombre de la empresa ya está registrado.", HttpStatus.NOT_FOUND);
+            }
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
