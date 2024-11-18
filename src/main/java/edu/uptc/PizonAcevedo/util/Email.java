@@ -55,13 +55,13 @@ public class Email {
                 "        <p>Contraseña temporal: <span class=\"highlight\">" + password + "</span></p>\n" +
                 "        <p>Por favor, sigue los siguientes pasos al recibir este correo:</p>\n" +
                 "        <ol>\n" +
-                "            <li>Ingresa a la plataforma a través de este enlace: <a href=\"" + "platformLink" + "\">" + "platformLink" + "</a>.</li>\n" +
+                "            <li>Ingresa a la plataforma a través de este enlace: <a href=\"" + "https://frontend-aires-sas.vercel.app" + "\">" + "Haz click aca" + "</a>.</li>\n" +
                 "            <li>Usa las credenciales proporcionadas para iniciar sesión.</li>\n" +
                 "            <li>Te recomendamos cambiar la contraseña temporal por una de tu preferencia para mayor seguridad en tu primera sesión.</li>\n" +
                 "        </ol>\n" +
                 "        <p>Si tienes alguna duda o necesitas asistencia, no dudes en contactarnos.</p>\n" +
                 "        <p>¡Estamos encantados de tenerte con nosotros!</p>\n" +
-                "        <p>Atentamente,<br><strong>" + "companyName" + "</strong><br>" + "contactInfo" + "</p>\n" +
+                "        <p>Atentamente,<br><strong>" + "P&A Aires Acondicionados" + "</strong><br>" + "contactInfo" + "</p>\n" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
