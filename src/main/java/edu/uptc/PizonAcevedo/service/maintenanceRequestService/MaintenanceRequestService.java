@@ -74,4 +74,8 @@ public class MaintenanceRequestService {
         }
         return requestNumber;
     }
+
+    public List<MaintenanceRequestEntity> getMaintenanceRequests() throws Exception {
+        return maintenanceRequestRepository.findAll();
+    }
 }

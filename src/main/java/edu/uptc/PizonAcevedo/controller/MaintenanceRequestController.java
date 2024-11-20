@@ -28,4 +28,16 @@ public class MaintenanceRequestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/getMaintenanceRequests", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getMaintenanceRequest() {
+       try {
+             return ResponseEntity.ok(maintenanceRequestService.getMaintenanceRequests()) ;
+         } catch (Exception e) {
+              e.printStackTrace();
+              return ResponseEntity.badRequest().body("Error al obtener las solicitudes de mantenimiento");
+
+       }
+    }
 }
