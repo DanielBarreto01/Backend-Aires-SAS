@@ -1,7 +1,5 @@
 package edu.uptc.PizonAcevedo.controller;
 
-import edu.uptc.PizonAcevedo.domain.model.clientModel.ClientEntity;
-import edu.uptc.PizonAcevedo.domain.model.equipmentModel.EnumEquipment;
 import edu.uptc.PizonAcevedo.domain.model.equipmentModel.EquipmentEntity;
 import edu.uptc.PizonAcevedo.service.equipmentService.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;

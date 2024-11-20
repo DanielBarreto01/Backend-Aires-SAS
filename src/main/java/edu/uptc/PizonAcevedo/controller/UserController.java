@@ -153,6 +153,17 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/findUsersWithoutAdminRole", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getUsersWithoutAdminRole() {
+        try {
+            return ResponseEntity.ok(userMgmt.getUsersWithoutAdminRole());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error al buscar los tecnicos");
+        }
+    }
+
 
     private Set<Roles> setRoles(Collection<String> roles){
         return roles.stream()

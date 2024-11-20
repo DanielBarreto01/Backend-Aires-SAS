@@ -1,6 +1,9 @@
 package edu.uptc.PizonAcevedo.util;
 
 public class EmailResetPassword {
+    private static final String phoneNumber = "+57 314 2305348";
+    private static final String contactEmail = "Director@pinzonyacevedosas.com.co";
+
     public static String bodyEmail(String name, String lastName, String code, String token, String userName) {
         String body = "<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Código de Verificación</title></head>" +
                 "<body style=\"font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;\">" +
@@ -18,7 +21,10 @@ public class EmailResetPassword {
                 "<p style=\"font-size: 18px; color: #333; margin-top: 20px;\">Recuerda que este código es válido solo por una hora y podrás usarlo una única vez en la página de recuperación de contraseña para completar el proceso.</p>" +
                 "<p style=\"font-size: 18px; color: #333;\">Si no solicitaste un cambio de contraseña, puedes ignorar este mensaje. Tu cuenta permanecerá segura.</p>" +
                 "<p style=\"font-size: 18px; color: #333;\">Para cualquier consulta adicional, no dudes en ponerte en contacto con nosotros.</p>" +
-                "<p style=\"font-size: 18px; color: #333;\">Atentamente,<br><strong>P&A Aires Acondicionados</strong><br>" + "contactInfo" + "</p>" +
+                "<p style=\"font-size: 18px; color: #333;\"> Atentamente,<br><strong>" + "P&A Aires Acondicionados" + "</strong><br>" +
+                "           Teléfono: " + phoneNumber + "<br>" +
+                "           Correo electrónico: <a href=\"mailto:" + contactEmail + "\">" + contactEmail + "</a>" +
+                "        </p>\n" +
                 "</div></body></html>";
         return body;
     }

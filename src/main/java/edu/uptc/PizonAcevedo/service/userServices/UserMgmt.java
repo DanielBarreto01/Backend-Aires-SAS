@@ -38,10 +38,6 @@ public class UserMgmt {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String userName =generateUniqueUsername(user);
         String password = generateRandomPassword();
-        System.out.println(user);
-        System.out.println(user.getPathImage());
-        System.out.println(user.getId() + "   userid");
-        System.out.println();
         if(!userRepo.existsByEmailAndNumberIdentification(user.getEmail(), user.getNumberIdentification())){
             emailService.sendEmail(user.getEmail(), Email.emailSubject(), Email.bodyEmail(user.getName(), user.getLastName(), userName, password));
         }
@@ -70,12 +66,7 @@ public class UserMgmt {
         return userRepo.findAll();
     }
 
-//    public static String generateBaseUsername(UserEntity user) {
-//        String baseUsername = (user.getName().toLowerCase().length() > 4? user.getName().toLowerCase().substring(0,4):user.getName().toLowerCase()) +
-//                user.getLastName().toLowerCase().substring(0, 3);
-//        String uniquePart = user.getNumberIdentification().substring(0, 4);
-//        return baseUsername.replaceAll("\\s+", "") + (user.getId()-1);
-//    }
+
 
     public String generateUniqueUsername(UserEntity user) {
         String baseUsername = (user.getName().contains(" ")? user.getName().split(" ")[0] : user.getName()) + "."
@@ -116,6 +107,11 @@ public class UserMgmt {
         userRepo.updateRoles((userRepo.findRoleIdByUserId(id)).get(0),rolesUser.iterator().next());
 
 
+    }
+
+    @Transactional
+    public List<UserEntity> getUsersWithoutAdminRole() throws Exception {
+        return userRepo.findUsersWithoutRoleAdmin(ERole.ADMIN);
     }
 
 

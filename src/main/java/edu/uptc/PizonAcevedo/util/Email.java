@@ -3,6 +3,9 @@ package edu.uptc.PizonAcevedo.util;
 import java.time.ZonedDateTime;
 
 public class Email {
+    private static final String phoneNumber = "+57 314 2305348";
+    private static final String contactEmail = "Director@pinzonyacevedosas.com.co";
+
     public static String bodyEmail(String name, String lastName, String userName, String password) {
         String body = "<!DOCTYPE html>\n" +
                 "<html lang=\"es\"><head>\n" +
@@ -61,7 +64,10 @@ public class Email {
                 "        </ol>\n" +
                 "        <p>Si tienes alguna duda o necesitas asistencia, no dudes en contactarnos.</p>\n" +
                 "        <p>¡Estamos encantados de tenerte con nosotros!</p>\n" +
-                "        <p>Atentamente,<br><strong>" + "P&A Aires Acondicionados" + "</strong><br>" + "contactInfo" + "</p>\n" +
+                "        <p>Atentamente,<br><strong>" + "P&A Aires Acondicionados" + "</strong><br>" +
+                "           Teléfono: " + phoneNumber + "<br>" +
+                "           Correo electrónico: <a href=\"mailto:" + contactEmail + "\">" + contactEmail + "</a>" +
+                "        </p>\n" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";

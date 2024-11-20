@@ -31,4 +31,7 @@ public interface EquipmentRepository extends JpaRepository<EquipmentEntity, Inte
     void linkEquipmentToClient(Integer clientId, List<Integer> equipmentIds);
 
     List<EquipmentEntity> findByClientId(Integer clientId);
+
+    List<EquipmentEntity> findAllByIdIn(List<Integer> equipmentIds);
+
 }
