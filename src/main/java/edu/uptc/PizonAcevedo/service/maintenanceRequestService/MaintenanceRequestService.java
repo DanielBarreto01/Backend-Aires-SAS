@@ -55,11 +55,6 @@ public class MaintenanceRequestService {
             return maintenanceRequest;
         }
         throw new Exception("El técnico no existe o el usrio no es tecnico");
-
-
-
-        // Guardar la solicitud de mantenimiento en la base de datos
-        //return maintenanceRequestRepository.save(maintenanceRequest);
     }
 
     private String generateUniqueRequestNumber() {
