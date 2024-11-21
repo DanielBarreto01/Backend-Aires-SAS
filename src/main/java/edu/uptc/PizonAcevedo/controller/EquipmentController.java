@@ -61,6 +61,8 @@ public class EquipmentController {
         return ResponseEntity.badRequest().build();
     }
 
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/getEquipmentsAvailable", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getEquipmentsAvailable(){
@@ -69,6 +71,17 @@ public class EquipmentController {
             return ResponseEntity.ok(equipments);
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/getEquipmentsIdClientAviable/{clientId}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getEquipmentsAvailable(@PathVariable int clientId){
+        try {
+            return ResponseEntity.ok(equipmentService.getEquipmentsIdClientAvailable(clientId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Errror al obtener equipos para el registro de mantenimiento");
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")

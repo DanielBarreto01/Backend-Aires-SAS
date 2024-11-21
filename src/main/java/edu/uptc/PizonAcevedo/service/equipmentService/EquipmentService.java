@@ -7,6 +7,7 @@ import edu.uptc.PizonAcevedo.domain.model.userModel.UserEntity;
 import edu.uptc.PizonAcevedo.domain.repository.equipmentRepository.EquipmentRepository;
 import edu.uptc.PizonAcevedo.domain.repository.equipmentRepository.UserEquipmentRepository;
 import edu.uptc.PizonAcevedo.service.userServices.UserMgmt;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -108,10 +109,15 @@ public class EquipmentService {
 
     public List<EquipmentEntity> getEquipmentsByClientId(Integer clientId){
         try {
-            return equipmentRepository.findByClientIdAndEquipmentStateTrue(clientId);
+            return equipmentRepository.findByClientId(clientId);
         } catch (Exception e) {
             logger.error("Error al obtener los equipos por cliente: {}", e.getMessage(), e);
             return null;
         }
+    }
+
+    @Transactional
+    public List<EquipmentEntity> getEquipmentsIdClientAvailable(int clientId) throws Exception{
+        return equipmentRepository.findByClientIdAndEquipmentStateTrue(clientId);
     }
 }
