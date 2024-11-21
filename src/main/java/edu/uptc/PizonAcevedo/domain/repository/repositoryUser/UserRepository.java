@@ -53,9 +53,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findByEmail(String email);
     Optional<UserEntity> findById(Integer id);
 
-
-    @Query("SELECT u FROM UserEntity u WHERE NOT EXISTS (" +
+    @Query("SELECT u FROM UserEntity u WHERE u.userStatus = true AND NOT EXISTS (" +
             "SELECT r FROM u.roles r WHERE r.name = :role)")
     List<UserEntity> findUsersWithoutRoleAdmin(@Param("role") ERole role);
+//    @Query("SELECT u FROM UserEntity u WHERE NOT EXISTS (" +
+//            "SELECT r FROM u.roles r WHERE r.name = :role)")
+
 }
 

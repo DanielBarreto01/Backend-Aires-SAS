@@ -91,6 +91,16 @@ public class ClientController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/getClientsActive", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getClientsActive() {
+        try {
+            return ResponseEntity.ok(clientService.getClientsActive());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al obtener los clientes activos.");
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/update/{clientId}", method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity updateClient(@PathVariable int clientId, @RequestBody Map<String, Object> requestData) {
         ClientEntity client = null;
@@ -118,4 +128,6 @@ public class ClientController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+
 }

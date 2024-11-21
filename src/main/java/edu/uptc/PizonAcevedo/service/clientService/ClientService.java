@@ -85,6 +85,7 @@ public class ClientService {
                 juridicalClient.setEmail((String) requestData.get("email"));
                 juridicalClient.setAddress((String) requestData.get("address"));
                 juridicalClient.setPathImage((String) requestData.get("pathImage"));
+                juridicalClient.setClientState((boolean) requestData.get("clientState"));
                 clientRepository.save(juridicalClient);
             }
             idsEquipments = (((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(java.util.stream.Collectors.toList()));
@@ -112,6 +113,7 @@ public class ClientService {
                 naturalClient.setEmail((String) requestData.get("email"));
                 naturalClient.setAddress((String) requestData.get("address"));
                 naturalClient.setPathImage((String) requestData.get("pathImage"));
+                naturalClient.setClientState((boolean) requestData.get("clientState"));
                 clientRepository.save(naturalClient);
             }
             idsEquipments = (((List<Integer>) requestData.get("idsEquipments")).stream().map(Integer::valueOf).collect(java.util.stream.Collectors.toList()));
@@ -122,5 +124,10 @@ public class ClientService {
             logger.error("Error al actualizar el cliente: {}", e.getMessage(), e);
         }
         return client;
+    }
+
+
+    public List<ClientEntity> getClientsActive() throws Exception {
+        return clientRepository.findByClientStateTrue();
     }
 }

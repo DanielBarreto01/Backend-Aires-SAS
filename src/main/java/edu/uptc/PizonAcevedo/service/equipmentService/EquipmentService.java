@@ -81,7 +81,6 @@ public class EquipmentService {
 
     public EquipmentEntity updateEquipment(int equipmentId, Map<String, Object> requestData) {
         EquipmentEntity equipment = equipmentRepository.findById(equipmentId).orElse(null);
-        System.out.println(equipment.getId());
         if(equipment != null) {
             equipment.setName((String) requestData.get("name"));
             equipment.setEquipmentType(EnumEquipment.valueOf((String) requestData.get("equipmentType")));
@@ -90,6 +89,7 @@ public class EquipmentService {
             equipment.setModelNumber((String) requestData.get("modelNumber").toString());
             equipment.setIventoryNumber(Integer.parseInt(requestData.get("iventoryNumber").toString()));
             equipment.setPathImage((String) requestData.get("pathImage"));
+            equipment.setEquipmentState((boolean) requestData.get("equipmentState"));
             equipmentRepository.save(equipment);
         }
         return equipment;
@@ -108,7 +108,7 @@ public class EquipmentService {
 
     public List<EquipmentEntity> getEquipmentsByClientId(Integer clientId){
         try {
-            return equipmentRepository.findByClientId(clientId);
+            return equipmentRepository.findByClientIdAndEquipmentStateTrue(clientId);
         } catch (Exception e) {
             logger.error("Error al obtener los equipos por cliente: {}", e.getMessage(), e);
             return null;
