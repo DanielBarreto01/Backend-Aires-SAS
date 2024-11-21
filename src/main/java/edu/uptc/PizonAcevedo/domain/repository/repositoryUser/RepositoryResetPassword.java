@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface RepositoryResetPassword extends JpaRepository<PasswordResets, Integer>{
+
     PasswordResets findByStatusAndToken(boolean status, String token);
 
     @Modifying
