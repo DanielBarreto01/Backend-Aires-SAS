@@ -50,12 +50,14 @@ public class MaintenanceRequestEntity {
     private String requestNumber;
 
     @NotNull
-    private boolean requestMaintenanceStatus = true;
+    @Column(length = 15)
+    private String requestMaintenanceStatus = "pendiente";
+
 
     @PrePersist
     public void prePersist() {
-        if (!this.requestMaintenanceStatus) {
-            this.requestMaintenanceStatus = true;  // Establecer valor por defecto si no se ha asignado
+        if (this.requestMaintenanceStatus == null){
+            this.requestMaintenanceStatus = "pendiente";  // Establecer valor por defecto si no se ha asignado
         }
     }
 
