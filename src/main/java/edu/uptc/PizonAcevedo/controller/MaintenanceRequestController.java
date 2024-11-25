@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,5 +40,15 @@ public class MaintenanceRequestController {
               return ResponseEntity.badRequest().body("Error al obtener las solicitudes de mantenimiento");
 
        }
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/updateMaintenanceRequest/{maintenanceRequestId}", method = RequestMethod.PATCH, produces = "application/json")
+    public ResponseEntity updateMaintenanceRequest(@PathVariable Integer maintenanceRequestId, @RequestBody Map<String, Object> requestData) {
+        try {
+            return ResponseEntity.ok(maintenanceRequestService.updateMaintenanceRequest(maintenanceRequestId, requestData));
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

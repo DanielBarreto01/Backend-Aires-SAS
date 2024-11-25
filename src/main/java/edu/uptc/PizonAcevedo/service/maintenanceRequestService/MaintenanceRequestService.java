@@ -1,6 +1,7 @@
 package edu.uptc.PizonAcevedo.service.maintenanceRequestService;
 
 import edu.uptc.PizonAcevedo.domain.model.clientModel.ClientEntity;
+import edu.uptc.PizonAcevedo.domain.model.equipmentModel.EquipmentEntity;
 import edu.uptc.PizonAcevedo.domain.model.maintenanceRequest.MaintenanceRequestEntity;
 import edu.uptc.PizonAcevedo.domain.model.userModel.ERole;
 import edu.uptc.PizonAcevedo.domain.model.userModel.UserEntity;
@@ -72,5 +73,42 @@ public class MaintenanceRequestService {
 
     public List<MaintenanceRequestEntity> getMaintenanceRequests() throws Exception {
         return maintenanceRequestRepository.findAll();
+    }
+
+    @Transactional
+    public MaintenanceRequestEntity updateMaintenanceRequest(Integer maintenanceRequestId, Map<String, Object> requestData) throws IllegalStateException {
+        MaintenanceRequestEntity request = maintenanceRequestRepository.findById(maintenanceRequestId)
+                .orElseThrow(() -> new IllegalStateException("No se encontró la solicitud de mantenimiento"));
+
+        ClientEntity client = clientRepository.findById((Integer) requestData.get("client"))
+                .orElseThrow(() -> new IllegalStateException("No se encontró el cliente"));
+
+
+        request.setClient(client);
+
+
+        UserEntity technician = userRepository.findById((Integer) requestData.get("technician"))
+                .orElseThrow(() -> new IllegalStateException("No se encontró el técnico"));
+
+
+        request.setTechnician(technician);
+
+
+        List<Integer> idsEquipments = ((List<Integer>) requestData.get("equipments"))
+                .stream().map(Integer::valueOf).collect(java.util.stream.Collectors.toList());
+
+
+        List<EquipmentEntity> equipments = equipmentRepository.findAllById(idsEquipments);
+
+
+        if (equipments.isEmpty()) {
+            throw new IllegalStateException("No hay equipos seleccionados");
+        }
+
+
+        request.setEquipments(new HashSet<>(equipments));
+
+
+        return maintenanceRequestRepository.save(request);
     }
 }
